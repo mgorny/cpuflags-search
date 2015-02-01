@@ -60,6 +60,15 @@ if __name__ == '__main__':
 	'''.split()
 
 	pm = get_package_manager()
-	pset = find_packages(pm.repositories[repo_name], flags)
-	for p in sorted(pset):
-		print(p)
+
+	if repo_name == 'ALL':
+		repos = pm.repositories
+	else:
+		repos = (pm.repositories[repo_name],)
+
+	for r in repos:
+		pset = find_packages(r, flags)
+		if pset:
+			print('== %s ==' % r.name)
+			for p in sorted(pset):
+				print(p)
